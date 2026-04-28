@@ -1,28 +1,18 @@
 package SeleniumFrameWork;
+import base.BaseTest;
+import pages.LoginPage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
+public class LogInTest extends BaseTest {
+	@Test
+    public void testLogin() {
 
-public class LogInTest {
-	 @Test
-	    public void testLogin() {
-	        WebDriverManager.chromedriver().setup();
-	        WebDriver driver = new ChromeDriver();
+        LoginPage lp = new LoginPage(driver);
 
-	        driver.get("https://the-internet.herokuapp.com/login");
+        lp.login("tomsmith", "SuperSecretPassword!");
 
-	        driver.findElement(org.openqa.selenium.By.id("username")).sendKeys("tomsmith");
-	        driver.findElement(org.openqa.selenium.By.id("password")).sendKeys("SuperSecretPassword!");
-	        driver.findElement(org.openqa.selenium.By.cssSelector("button[type='submit']")).click();
-
-	        String text = driver.findElement(org.openqa.selenium.By.id("flash")).getText();
-
-	        Assert.assertTrue(text.contains("logged"));
-
-	        driver.quit();
+        Assert.assertTrue(lp.getMessage().contains("You logged into a secure area"));
 	    }
 	}
 	
